@@ -13327,3 +13327,22 @@ Copyright (c) 2015 Daniel Eden
     padding-right: 0; }
 
 /*# sourceMappingURL=black-dashboard.css.map */
+
+.newlist{
+  list-style: none;
+  padding: 0;
+  margin: 30px;
+  width: 100%;
+  display: flex;
+  cursor: grab;
+  align-items: center;
+  height: 60px;
+  overflow: hidden;
+}
+#div1{  
+  width: 350px;
+  min-height: 400px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;}
+
+ 

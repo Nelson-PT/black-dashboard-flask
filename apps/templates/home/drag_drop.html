@@ -1,0 +1,113 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+
+{% block stylesheets %}
+<style>
+ 
+
+        .dropzone {
+        min-height: 300px;
+        padding: 10px;
+        border: 2px dashed #aaa;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+        }
+    
+        
+
+        .dropzone.drag-over {
+        background-color: #265e26;
+        border-color: white;
+        }
+
+        .item {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        cursor: grab;
+        user-select: none;
+        }
+
+        .item:active {
+        cursor: grabbing;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    <div class="row justify-content-center">
+  
+      <div class="col-md-6">
+        <div class="dropzone" id="todo">
+          <h3>To Create</h3>
+          <div class="item" draggable="true" id="item1">Task 1</div>
+          <div class="item" draggable="true" id="item2">Task 2</div>
+        </div>
+      </div>
+  
+      <div class="col-md-6">
+        <div class="dropzone" id="inprogress">
+          <h3>Available</h3>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    const items = document.querySelectorAll('.item');
+    const dropzones = document.querySelectorAll('.dropzone');
+
+    let draggedItem = null;
+
+    items.forEach(item => {
+        item.addEventListener('dragstart', dragStart);
+        item.addEventListener('dragend', dragEnd);
+    });
+
+    dropzones.forEach(zone => {
+        zone.addEventListener('dragover', dragOver);
+        zone.addEventListener('dragleave', dragLeave);
+        zone.addEventListener('drop', dropItem);
+    });
+
+    function dragStart(e) {
+        draggedItem = e.target;
+        e.target.classList.add('dragging');
+    }
+
+    function dragEnd(e) {
+        e.target.classList.remove('dragging');
+        // If not dropped into a dropzone, it stays where it was
+        draggedItem = null;
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    function dragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function dropItem(e) {
+        e.preventDefault();
+        if (draggedItem) {
+        e.currentTarget.appendChild(draggedItem);
+        e.currentTarget.classList.remove('drag-over');
+        }
+    }
+</script>
+
+{% endblock javascripts %}
